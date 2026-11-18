@@ -1,1 +1,46 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TSSR · Espace Formation</title><link rel="stylesheet" href="style.css"></head><body><aside class="sidebar"><div class="brand"><div class="brand-mark">▱<span>▱</span><i>▱</i></div><div><b>TSSR</b><small>FORMATION SYSTÈMES & RÉSEAUX</small></div></div><nav id="nav"><button data-page="home" class="active"><span class="navicon">⌂</span>Accueil</button><button data-page="modules"><span class="navicon">▤</span>Cours</button><button data-page="revision"><span class="navicon">▣</span>Fiches de révision</button><button data-page="commands"><span class="navicon">⌘</span>Commandes</button><button data-page="practice"><span class="navicon">⚒</span>TP / Labs</button><button data-page="tools"><span class="navicon">◇</span>Outils & ressources</button></nav><div class="sidebar-bottom"><div class="weather">☀ <span>Météo locale<br><small>À connecter</small></span></div><small>ESPACE FORMATION · V2</small></div></aside><div class="app"><header class="top"><div class="top-title"><b>TSSR</b><span>ESPACE FORMATION</span></div><div class="toplinks"><button data-page="home">Accueil</button><button data-page="modules">Cours</button><button data-page="revision">Fiches</button><button data-page="commands">Commandes</button></div><div id="clock"></div></header><main id="view"></main></div><script src="app.js"></script></body></html>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Démarrage d’une distribution Debian – TSSR</title><link rel="stylesheet" href="tssr.css"></head><body>
+<header class="top"><button id="burger" aria-label="Menu">☰</button><div class="brand"><b>TSSR</b><small>Technicien Supérieur Support Réseaux</small></div>
+<div class="search"><input id="q" type="search" placeholder="Rechercher une commande…" aria-label="Rechercher"></div><div class="acct">👤 Mon compte</div></header>
+<div class="layout">
+<aside class="side"><nav id="menu"></nav><h4>MODULES DE FORMATION</h4><nav class="mod" id="modules"></nav><div class="prog" id="prog"></div></aside>
+<div class="main">
+<div class="banner img"><div class="crumb">Cours › Administration GNU/Linux › Module 03</div>
+<div class="titre"><span class="debian-mark" aria-hidden="true">◉</span><div><h1>Démarrage d’une distribution Debian</h1><p>Module 03 – Administration Debian GNU/Linux</p></div></div>
+<div class="tabs"><a class="on" href="#cours">Cours complet</a><a href="#revision">Fiche de révision</a><a href="#qcm">QCM (15)</a></div></div>
+<div class="content" id="cours"><div>
+<section class="panel"><h2><span class="ico">◎</span>Objectifs pédagogiques</h2><div class="in"><ul class="checks">
+<li><input type="checkbox" checked aria-label="objectif"><span>Comprendre les différentes étapes du démarrage d’un système Debian.</span></li>
+<li><input type="checkbox" checked><span>Identifier le rôle du BIOS, de l’UEFI, du MBR, de GRUB et du noyau Linux.</span></li>
+<li><input type="checkbox" checked><span>Consulter et modifier la configuration de GRUB.</span></li>
+<li><input type="checkbox" checked><span>Comprendre le rôle de <span class="chip">systemd</span> et des cibles de démarrage.</span></li>
+<li><input type="checkbox" checked><span>Administrer les services avec la commande <span class="chip">systemctl</span>.</span></li>
+<li><input type="checkbox" checked><span>Arrêter, programmer un arrêt ou redémarrer un système Linux.</span></li></ul></div></section>
+<div class="h-sec"><b>1</b><h2>Comprendre le démarrage de Debian</h2></div>
+<h3 class="sub">1.1 Les grandes étapes du démarrage</h3>
+<p>Lorsqu’un ordinateur démarre, plusieurs composants interviennent successivement avant que l’utilisateur puisse ouvrir une session. Le déroulement est le suivant :</p>
+<div class="demarrage"><ol class="flow"><li>Mise sous tension</li><li>BIOS / UEFI</li><li>MBR / GPT</li><li>GRUB2</li><li class="on">Noyau Linux</li><li>systemd (PID 1)</li><li>Cible + Services</li></ol>
+<div><table><thead><tr><th>Élément</th><th>Rôle</th></tr></thead><tbody>
+<tr><td>BIOS / UEFI</td><td>Initialise le matériel et recherche un amorçage.</td></tr>
+<tr><td>MBR / GPT</td><td>Contient les informations de partitionnement et d’amorçage.</td></tr>
+<tr><td>GRUB2</td><td>Chargeur d’amorçage : propose le choix du système à démarrer.</td></tr>
+<tr><td>Noyau Linux</td><td>Charge le noyau et les pilotes de base.</td></tr>
+<tr><td>systemd</td><td>Premier processus (PID 1) : gère l’initialisation des services.</td></tr>
+<tr><td>Services</td><td>Lance les services du système (réseau, SSH, etc.) et la session utilisateur.</td></tr></tbody></table>
+<div class="retenir"><h3>⚠ À retenir</h3><p>GRUB2 est le point d’entrée du système. Il permet de choisir le noyau et de transmettre les paramètres de démarrage.</p></div></div></div>
+</div>
+<aside class="aside">
+<section class="panel" id="revision"><h3><span class="ico">▤</span>Fiche de révision – Module 03</h3><div class="in"><ul class="checks">
+<li><input type="checkbox" checked><span>Chaîne de démarrage : BIOS/UEFI → MBR/GPT → GRUB2 → noyau → systemd.</span></li>
+<li><input type="checkbox" checked><span>Rôle de GRUB2 : chargeur d’amorçage.</span></li>
+<li><input type="checkbox" checked><span>systemd (PID 1) : init moderne, gestion des services.</span></li>
+<li><input type="checkbox" checked><span>Commandes clés : <span class="chip">systemctl</span>, journalctl, shutdown…</span></li></ul></div></section>
+<section class="panel"><h3><span class="ico">⌨</span>Commandes essentielles</h3><table class="cmds"><thead><tr><th>Commande</th><th colspan="2">Description</th></tr></thead><tbody>
+<tr><td><code class="cmd">systemctl status &lt;svc&gt;</code></td><td>État d’un service</td><td><button class="cp" aria-label="Copier">⧉</button></td></tr>
+<tr><td><code class="cmd">systemctl start &lt;svc&gt;</code></td><td>Démarrer un service</td><td><button class="cp" aria-label="Copier">⧉</button></td></tr>
+<tr><td><code class="cmd">systemctl stop &lt;svc&gt;</code></td><td>Arrêter un service</td><td><button class="cp" aria-label="Copier">⧉</button></td></tr>
+<tr><td><code class="cmd">systemctl restart &lt;svc&gt;</code></td><td>Redémarrer un service</td><td><button class="cp" aria-label="Copier">⧉</button></td></tr>
+<tr><td><code class="cmd">systemctl enable &lt;svc&gt;</code></td><td>Activer au démarrage</td><td><button class="cp" aria-label="Copier">⧉</button></td></tr>
+<tr><td><code class="cmd">systemctl disable &lt;svc&gt;</code></td><td>Désactiver au démarrage</td><td><button class="cp" aria-label="Copier">⧉</button></td></tr></tbody></table></section>
+<section class="panel"><h3><span class="ico">★</span>Points clés</h3><div class="in"><ul class="dots"><li>Le démarrage se fait en plusieurs étapes successives.</li><li>GRUB2 charge le noyau Linux.</li><li>systemd initialise le système et les services.</li><li>La commande <span class="chip">systemctl</span> permet de gérer les services.</li></ul></div></section>
+</aside></div><section class="qcm-panel" id="qcm" hidden><h2>QCM — Démarrage Debian</h2><p>Quel processus possède généralement le PID 1 sur Debian moderne ?</p><label><input type="radio" name="qcm1" value="a"> GRUB2</label><label><input type="radio" name="qcm1" value="b"> systemd</label><label><input type="radio" name="qcm1" value="c"> BIOS</label><button id="checkQcm">Vérifier ma réponse</button><p id="qcmResult" aria-live="polite"></p><small>Démonstration : 1 question disponible sur les 15 annoncées.</small></section></div></div>
+<script src="tssr.js"></script></body></html>
